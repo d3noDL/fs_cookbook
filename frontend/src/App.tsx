@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import AddRecipePage from "./pages/AddRecipePage";
+
+const BACKEND_ADDRESS = "http://192.168.50.2:1234";
 
 export class User {
   username: string = "";
@@ -34,12 +36,19 @@ export default function App() {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState<User>();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
+
+  useEffect(() => {
+    fetch(`${BACKEND_ADDRESS}/recipes`)
+      .then((response) => response.json())
+      .then((result) => setRecipes(result as Recipe[]));
+  });
 
   function handleLogin(
     username: string | undefined,
     password: string | undefined
   ) {
-    fetch("http://192.168.50.2:1234/users")
+    fetch(`${BACKEND_ADDRESS}/users`)
       .then((response) => response.json())
       .then((users) => {
         for (const user of users as User[]) {
@@ -62,7 +71,13 @@ export default function App() {
   }
 
   function addRecipe(recipe: Recipe) {
-    return recipe;
+    fetch(`${BACKEND_ADDRESS}/addrecipe`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+      body: JSON.stringify(recipe),
+    });
   }
 
   return (
@@ -73,6 +88,7 @@ export default function App() {
           <LandingPage
             isLoggedIn={isLoggedIn}
             username={currentUser?.username}
+            recipes={recipes}
           />
         }
       />
