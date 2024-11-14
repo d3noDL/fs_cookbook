@@ -10,7 +10,13 @@ export default function LandingPage({ isLoggedIn, username }: Props) {
   return (
     <>
       {isLoggedIn ? (
-        "Hello " + username + "!"
+        <>
+          <label>{"Hello " + username + "!"}</label>
+          <hr></hr>
+          <button onClick={() => navigate("/addrecipe")}>add recipe</button>
+          <button onClick={() => navigate("/addrecipe")}>edit recipe</button>
+          <button onClick={() => navigate("/addrecipe")}>remove recipe</button>
+        </>
       ) : (
         <button onClick={() => navigate("/login")}>login</button>
       )}

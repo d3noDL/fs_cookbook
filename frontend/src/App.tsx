@@ -2,10 +2,32 @@ import { useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
+import AddRecipePage from "./pages/AddRecipePage";
 
-class User {
+export class User {
   username: string = "";
   password: string = "";
+}
+
+export class Recipe {
+  title: string = "";
+  subtitle: string = "";
+  description: string = "";
+  ingredients: string[] = [];
+  steps: string[] = [];
+  constructor(
+    title: string,
+    subtitle: string,
+    description: string,
+    ingredients: string[],
+    steps: string[]
+  ) {
+    this.title = title;
+    this.subtitle = subtitle;
+    this.description = description;
+    this.ingredients = ingredients;
+    this.steps = steps;
+  }
 }
 
 export default function App() {
@@ -38,6 +60,11 @@ export default function App() {
         }
       });
   }
+
+  function addRecipe(recipe: Recipe) {
+    return recipe;
+  }
+
   return (
     <Routes>
       <Route
@@ -50,6 +77,10 @@ export default function App() {
         }
       />
       <Route path="/login" element={<LoginPage handleLogin={handleLogin} />} />
+      <Route
+        path="/addrecipe"
+        element={<AddRecipePage addRecipe={addRecipe} />}
+      />
     </Routes>
   );
 }
