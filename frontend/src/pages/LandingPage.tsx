@@ -25,9 +25,13 @@ export default function LandingPage({ isLoggedIn, username, recipes }: Props) {
       ) : (
         <button onClick={() => navigate("/login")}>login</button>
       )}
-      {recipes.map((recipe) => {
+      {recipes.map((recipe, index) => {
         return (
-          <RecipeCard recipe={recipe} isLoggedIn={isLoggedIn}></RecipeCard>
+          <RecipeCard
+            key={index}
+            recipe={recipe}
+            isLoggedIn={isLoggedIn}
+          ></RecipeCard>
         );
       })}
     </>

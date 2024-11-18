@@ -12,13 +12,13 @@ export default function RecipeCard({ recipe, isLoggedIn }: Props) {
       <h3>{recipe.subtitle}</h3>
       <p>{recipe.description}</p>
       <ul>
-        {recipe.ingredients.map((ingredient) => {
-          return <li>{ingredient}</li>;
+        {recipe.ingredients.map((ingredient, index) => {
+          return <li key={index}>{ingredient}</li>;
         })}
       </ul>
       <ol>
-        {recipe.steps.map((step) => {
-          return <li>{step}</li>;
+        {recipe.steps.map((step, index) => {
+          return <li key={index}>{step}</li>;
         })}
       </ol>
       {isLoggedIn && (

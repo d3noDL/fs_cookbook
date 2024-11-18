@@ -4,6 +4,9 @@ import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import AddRecipePage from "./pages/AddRecipePage";
 
+const API_HEADERS = {
+  Authorization: "supersecretapikey",
+};
 const BACKEND_ADDRESS = "http://192.168.50.2:1234";
 
 export class User {
@@ -39,7 +42,7 @@ export default function App() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
 
   useEffect(() => {
-    fetch(`${BACKEND_ADDRESS}/recipes`)
+    fetch(`${BACKEND_ADDRESS}/recipes`, { headers: API_HEADERS })
       .then((response) => response.json())
       .then((result) => setRecipes(result as Recipe[]));
   });
@@ -48,7 +51,7 @@ export default function App() {
     username: string | undefined,
     password: string | undefined
   ) {
-    fetch(`${BACKEND_ADDRESS}/users`)
+    fetch(`${BACKEND_ADDRESS}/users`, { headers: API_HEADERS })
       .then((response) => response.json())
       .then((users) => {
         for (const user of users as User[]) {
@@ -75,6 +78,7 @@ export default function App() {
       method: "POST",
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        Authorization: "supersecretapikey",
       },
       body: JSON.stringify(recipe),
     });
